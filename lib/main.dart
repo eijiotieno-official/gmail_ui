@@ -1,8 +1,22 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_ui/state/screen_type_notifier.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  // Run the application
+  runApp(
+    MultiProvider(
+      providers: [
+        // Provide the SongsProvider with the loaded songs and SongHandler
+        ChangeNotifierProvider(
+          create: (context) => ScreenTypeNotifier(),
+        ),
+      ],
+      // Use the MainApp widget as the root of the application
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -13,6 +27,7 @@ class MainApp extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: lightDynamic,
             useMaterial3: true,
