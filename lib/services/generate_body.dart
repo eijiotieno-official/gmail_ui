@@ -1,6 +1,10 @@
 import 'dart:math';
 
-String generateBody() {
+String generateBody(int maxSentences) {
+  if (maxSentences <= 0) {
+    throw ArgumentError("Number of sentences should be greater than 0");
+  }
+
   List<String> sentences = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -24,7 +28,8 @@ String generateBody() {
   ];
 
   Random random = Random();
-  int numberOfSentences = random.nextInt(3) + 2;
+  int numberOfSentences = random.nextInt(maxSentences) +
+      1; // Adjusted to generate at least 1 sentence
 
   List<String> selectedSentences = sentences.sublist(0, numberOfSentences);
 
