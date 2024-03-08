@@ -1,14 +1,21 @@
 import 'package:gmail_ui/data/models/attachment.dart';
 
 List<Attachment> generateAttachments(int numberOfAttachments) {
-  List<Attachment> attachments = [];
+  List<Attachment> availableAttachments = [];
+  List<Attachment> generatedAttachments = [];
 
-  for (int i = 1; i <= numberOfAttachments; i++) {
-    attachments.add(Attachment(
-      name: 'Attachment$i',
-      url: 'url$i',
-    ));
+  if (numberOfAttachments > availableAttachments.length) {
+    throw ArgumentError(
+        "Number of requested attachments exceeds available attachments");
   }
 
-  return attachments;
+  for (int i = 1; i <= numberOfAttachments; i++) {
+    Attachment attachment = Attachment(
+      name: availableAttachments[i].name,
+      url: availableAttachments[i].url,
+    );
+    generatedAttachments.add(attachment);
+  }
+
+  return generatedAttachments;
 }
