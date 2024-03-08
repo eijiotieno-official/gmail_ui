@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
+import 'package:gmail_ui/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -36,11 +37,7 @@ class MainApp extends StatelessWidget {
             colorScheme: darkDynamic,
             useMaterial3: true,
           ),
-          home: Scaffold(
-            body: Center(
-              child: Text('Hello World!'),
-            ),
-          ),
+          home: const HomeScreen()
         );
       },
     );
