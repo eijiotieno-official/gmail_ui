@@ -22,7 +22,11 @@ class GmailDrawer extends StatelessWidget {
                   navigationIndexRef.update(index),
               children: const [
                 ListTile(
-                  title: Text("accountEmail"),
+                  leading: CircleAvatar(
+                    child: Icon(Icons.person_rounded),
+                  ),
+                  title: Text("User name"),
+                  subtitle: Text("example@gmail.com"),
                 ),
                 NavigationDrawerDestination(
                   icon: GmailNavigationIcon(

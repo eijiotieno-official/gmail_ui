@@ -32,16 +32,17 @@ class MainApp extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: lightDynamic,
-              useMaterial3: true,
-            ),
-            darkTheme: ThemeData(
-              colorScheme: darkDynamic,
-              useMaterial3: true,
-            ),
-            home: const HomeScreen());
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: lightDynamic,
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            colorScheme: darkDynamic,
+            useMaterial3: true,
+          ),
+          home: const HomeScreen(),
+        );
       },
     );
   }
