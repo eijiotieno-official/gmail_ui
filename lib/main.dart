@@ -37,10 +37,10 @@ class MainApp extends StatelessWidget {
               colorScheme: lightDynamic,
               useMaterial3: true,
             ),
-            // darkTheme: ThemeData(
-            //   colorScheme: darkDynamic,
-            //   useMaterial3: true,
-            // ),
+            darkTheme: ThemeData(
+              colorScheme: darkDynamic,
+              useMaterial3: true,
+            ),
             home: const HomeScreen());
       },
     );
