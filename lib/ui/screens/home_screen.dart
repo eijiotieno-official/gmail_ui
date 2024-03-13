@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
+import 'package:gmail_ui/ui/components/gmail_drawer.dart';
+import 'package:gmail_ui/ui/components/gmail_rail.dart';
+
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ScreenTypeNotifier>(
@@ -26,11 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
               screenTypeRef.update(type);
             });
             return Scaffold(
-              backgroundColor: screenTypeRef.screenType == ScreenType.mobile
-                  ? Colors.red
-                  : Colors.green,
-              appBar: AppBar(
-                title: Text(type.name),
+              drawer: screenTypeRef.screenType == ScreenType.mobile
+                  ? const GmailDrawer()
+                  : null,
+              appBar: AppBar(),
+              body: Row(
+                children: [
+                  if (screenTypeRef.screenType == ScreenType.tablet)
+                    const GmailRail(),
+                  if (screenTypeRef.screenType == ScreenType.desktop)
+                    const GmailDrawer(),
+                ],
               ),
             );
           },
