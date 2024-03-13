@@ -16,26 +16,40 @@ class GmailDrawer extends StatelessWidget {
         return Consumer<ScreenTypeNotifier>(
           builder: (context, ref, child) {
             return NavigationDrawer(
+              
               elevation: ref.screenType == ScreenType.desktop ? 0 : null,
               selectedIndex: navigationIndexRef.selectedIndex,
               onDestinationSelected: (index) =>
                   navigationIndexRef.update(index),
               children: const [
-                ListTile(
-                  leading: CircleAvatar(
-                    child: Icon(Icons.person_rounded),
+                UserAccountsDrawerHeader(
+                  
+                  currentAccountPicture: CircleAvatar(
+                    child: Icon(
+                      Icons.person_rounded,
+                      size: 25,
+                    ),
                   ),
-                  title: Text(
+                  currentAccountPictureSize: Size.fromRadius(25),
+                  otherAccountsPictures: [
+                    CircleAvatar(
+                      child: Icon(
+                        Icons.person_rounded,
+                        size: 15,
+                      ),
+                    )
+                  ],
+                  otherAccountsPicturesSize: Size.fromRadius(15),
+                  accountName: Text(
                     "User name",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  subtitle: Text(
+                  accountEmail: Text(
                     "example@gmail.com",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  trailing: Icon(Icons.more_vert_rounded),
                 ),
                 NavigationDrawerDestination(
                   icon: GmailNavigationIcon(
