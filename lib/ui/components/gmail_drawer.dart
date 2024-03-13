@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
-import 'package:gmail_ui/state/navigation_index_notifier.dart';
+import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -11,19 +11,17 @@ class GmailDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NavigationIndexNotifier>(
-      builder: (context, navigationIndexRef, child) {
+    return Consumer<NavigationNotifier>(
+      builder: (context, navigationRef, child) {
         return Consumer<ScreenTypeNotifier>(
           builder: (context, ref, child) {
             return NavigationDrawer(
-              
               elevation: ref.screenType == ScreenType.desktop ? 0 : null,
-              selectedIndex: navigationIndexRef.selectedIndex,
+              selectedIndex: navigationRef.selectedIndex,
               onDestinationSelected: (index) =>
-                  navigationIndexRef.update(index),
+                  navigationRef.updateIndex(index),
               children: const [
                 UserAccountsDrawerHeader(
-                  
                   currentAccountPicture: CircleAvatar(
                     child: Icon(
                       Icons.person_rounded,
@@ -105,6 +103,17 @@ class GmailDrawer extends StatelessWidget {
                     unreadCount: 0,
                   ),
                   label: Text("Draft"),
+                ),
+                NavigationDrawerDestination(
+                  icon: GmailNavigationIcon(
+                    icon: Icon(Icons.keyboard_arrow_down_rounded),
+                    unreadCount: 0,
+                  ),
+                  selectedIcon: GmailNavigationIcon(
+                    icon: Icon(Icons.keyboard_arrow_down_rounded),
+                    unreadCount: 0,
+                  ),
+                  label: Text("More"),
                 ),
               ],
             );

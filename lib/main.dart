@@ -1,6 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:gmail_ui/state/navigation_index_notifier.dart';
+import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:gmail_ui/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ void main() {
           create: (context) => ScreenTypeNotifier(),
         ),
         ChangeNotifierProvider(
-          create: (context) => NavigationIndexNotifier(),
+          create: (context) => NavigationNotifier(),
         ),
       ],
       // Use the MainApp widget as the root of the application
