@@ -25,8 +25,17 @@ class GmailDrawer extends StatelessWidget {
                   leading: CircleAvatar(
                     child: Icon(Icons.person_rounded),
                   ),
-                  title: Text("User name"),
-                  subtitle: Text("example@gmail.com"),
+                  title: Text(
+                    "User name",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    "example@gmail.com",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: Icon(Icons.more_vert_rounded),
                 ),
                 NavigationDrawerDestination(
                   icon: GmailNavigationIcon(
