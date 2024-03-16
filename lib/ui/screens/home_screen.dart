@@ -32,8 +32,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   if (screenTypeRef.screenType == ScreenType.tablet)
                     const GmailRail(),
-                  if (screenTypeRef.screenType == ScreenType.desktop)
-                    const GmailDrawer(),
+                  Expanded(
+                    child: Container(),
+                  ),
                 ],
               ),
             );

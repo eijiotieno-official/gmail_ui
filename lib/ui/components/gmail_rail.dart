@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/state/navigation_notifier.dart';
-import 'package:gmail_ui/ui/components/gmail_navigation_icon.dart';
 import 'package:provider/provider.dart';
 
 class GmailRail extends StatelessWidget {
@@ -17,183 +16,151 @@ class GmailRail extends StatelessWidget {
             child: const Icon(Icons.create_rounded),
           ),
           labelType: NavigationRailLabelType.all,
-          destinations: [
-            const NavigationRailDestination(
-              icon: GmailNavigationIcon(
-                icon: Icon(Icons.inbox_outlined),
-                unreadCount: 5,
-              ),
-              selectedIcon: GmailNavigationIcon(
-                icon: Icon(Icons.inbox),
-                unreadCount: 5,
-              ),
-              label: Text("Inbox"),
-            ),
-            const NavigationRailDestination(
-              icon: GmailNavigationIcon(
-                icon: Icon(Icons.star_outline),
-                unreadCount: 0,
-              ),
-              selectedIcon: GmailNavigationIcon(
-                icon: Icon(Icons.star),
-                unreadCount: 0,
-              ),
-              label: Text("Starred"),
-            ),
-            const NavigationRailDestination(
-              icon: GmailNavigationIcon(
-                icon: Icon(Icons.snooze_outlined),
-                unreadCount: 10,
-              ),
-              selectedIcon: GmailNavigationIcon(
-                icon: Icon(Icons.snooze),
-                unreadCount: 10,
-              ),
-              label: Text("Snoozed"),
-            ),
-            const NavigationRailDestination(
-              icon: GmailNavigationIcon(
-                icon: Icon(Icons.send_outlined),
-                unreadCount: 0,
-              ),
-              selectedIcon: GmailNavigationIcon(
-                icon: Icon(Icons.send),
-                unreadCount: 0,
-              ),
-              label: Text("Sent"),
-            ),
-            const NavigationRailDestination(
-              icon: GmailNavigationIcon(
-                icon: Icon(Icons.drafts_outlined),
-                unreadCount: 0,
-              ),
-              selectedIcon: GmailNavigationIcon(
-                icon: Icon(Icons.drafts),
-                unreadCount: 0,
-              ),
-              label: Text("Draft"),
-            ),
-            NavigationRailDestination(
-              icon: GmailNavigationIcon(
-                icon: ref.moreVisible
-                    ? const Icon(Icons.keyboard_arrow_up_rounded)
-                    : const Icon(Icons.keyboard_arrow_down_rounded),
-                unreadCount: 0,
-              ),
-              label: ref.moreVisible ? const Text("Less") : const Text("More"),
-            ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.label_important_outline_rounded),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.label_important_rounded),
-                  unreadCount: 0,
-                ),
-                label: Text("Important"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.chat_outlined),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.chat),
-                  unreadCount: 0,
-                ),
-                label: Text("Chats"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.schedule_send_outlined),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.schedule_send),
-                  unreadCount: 0,
-                ),
-                label: Text("Scheduled"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.mail_outline),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.mail),
-                  unreadCount: 0,
-                ),
-                label: Text("All Mail"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.info_outline),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.info),
-                  unreadCount: 0,
-                ),
-                label: Text("Spam"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.delete_outline),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.delete),
-                  unreadCount: 0,
-                ),
-                label: Text("Trash"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.label_outline),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.label),
-                  unreadCount: 0,
-                ),
-                label: Text("Categories"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.settings_outlined),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.settings),
-                  unreadCount: 0,
-                ),
-                label: Text("Manage labels"),
-              ),
-            if (ref.moreVisible)
-              const NavigationRailDestination(
-                icon: GmailNavigationIcon(
-                  icon: Icon(Icons.add_rounded),
-                  unreadCount: 0,
-                ),
-                selectedIcon: GmailNavigationIcon(
-                  icon: Icon(Icons.add_rounded),
-                  unreadCount: 0,
-                ),
-                label: Text("Create new label"),
-              ),
-          ],
+          destinations: _buildNavigationRailDestinations(ref),
           selectedIndex: ref.selectedIndex,
         );
       },
     );
   }
+
+  List<NavigationRailDestination> _buildNavigationRailDestinations(
+    NavigationNotifier ref,
+  ) {
+    final destinations = [
+      _navigationRailDestination(
+        icon: Icons.inbox_outlined,
+        selectedIcon: Icons.inbox,
+        label: "Inbox",
+        unreadCount: 5,
+      ),
+      _navigationRailDestination(
+        icon: Icons.star_outline,
+        selectedIcon: Icons.star,
+        label: "Starred",
+        unreadCount: 0,
+      ),
+      _navigationRailDestinationWithBadge(
+        icon: Icons.snooze_outlined,
+        selectedIcon: Icons.snooze,
+        label: "Snoozed",
+        unreadCount: 10,
+      ),
+      _navigationRailDestinationWithBadge(
+        icon: Icons.send_outlined,
+        selectedIcon: Icons.send,
+        label: "Sent",
+        unreadCount: 0,
+      ),
+      _navigationRailDestinationWithBadge(
+        icon: Icons.drafts_outlined,
+        selectedIcon: Icons.drafts,
+        label: "Draft",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: ref.moreVisible
+            ? Icons.keyboard_arrow_up_rounded
+            : Icons.keyboard_arrow_down_rounded,
+        label: ref.moreVisible ? "Less" : "More",
+        selectedIcon: ref.moreVisible
+            ? Icons.keyboard_arrow_up_rounded
+            : Icons.keyboard_arrow_down_rounded,
+      ),
+    ];
+
+    if (ref.moreVisible) {
+      destinations.addAll(
+        [
+          _navigationRailDestinationWithBadge(
+            icon: Icons.label_important_outline_rounded,
+            selectedIcon: Icons.label_important_rounded,
+            label: "Important",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.chat_outlined,
+            selectedIcon: Icons.chat,
+            label: "Chats",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.schedule_send_outlined,
+            selectedIcon: Icons.schedule_send,
+            label: "Scheduled",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.mail_outline,
+            selectedIcon: Icons.mail,
+            label: "All Mail",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.info_outline,
+            selectedIcon: Icons.info,
+            label: "Spam",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.delete_outline,
+            selectedIcon: Icons.delete,
+            label: "Trash",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.label_outline,
+            selectedIcon: Icons.label,
+            label: "Categories",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.settings_outlined,
+            selectedIcon: Icons.settings,
+            label: "Manage labels",
+            unreadCount: 0,
+          ),
+          _navigationRailDestinationWithBadge(
+            icon: Icons.add_rounded,
+            selectedIcon: Icons.add_rounded,
+            label: "Create new label",
+            unreadCount: 0,
+          ),
+        ],
+      );
+    }
+
+    return destinations;
+  }
+
+  NavigationRailDestination _navigationRailDestination({
+    required IconData icon,
+    required IconData selectedIcon,
+    required String label,
+    int unreadCount = 0,
+  }) =>
+      NavigationRailDestination(
+        icon: Icon(icon),
+        selectedIcon: Icon(selectedIcon),
+        label: Text(label),
+      );
+
+  NavigationRailDestination _navigationRailDestinationWithBadge({
+    required IconData icon,
+    required IconData selectedIcon,
+    required String label,
+    required int unreadCount,
+  }) =>
+      NavigationRailDestination(
+        icon: Badge.count(
+          isLabelVisible: unreadCount > 0,
+          count: unreadCount,
+          child: Icon(icon),
+        ),
+        selectedIcon: Badge.count(
+          isLabelVisible: unreadCount > 0,
+          count: unreadCount,
+          child: Icon(selectedIcon),
+        ),
+        label: Text(label),
+      );
 }
