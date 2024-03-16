@@ -41,9 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
               drawer: screenTypeRef.screenType == ScreenType.mobile
                   ? const GmailDrawer()
                   : null,
-              appBar: screenTypeRef.screenType == ScreenType.mobile
-                  ? AppBar()
-                  : null,
               body: Row(
                 children: [
                   if (screenTypeRef.screenType == ScreenType.tablet)
@@ -60,6 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              floatingActionButton:
+                  screenTypeRef.screenType == ScreenType.mobile
+                      ? FloatingActionButton(
+                          onPressed: () {},
+                          child: const Icon(Icons.create_rounded),
+                        )
+                      : null,
             );
           },
         );

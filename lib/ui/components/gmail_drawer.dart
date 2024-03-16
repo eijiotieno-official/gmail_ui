@@ -44,11 +44,12 @@ class GmailDrawer extends StatelessWidget {
         currentAccountPictureSize: Size.fromRadius(25),
         otherAccountsPictures: [
           CircleAvatar(
+            radius: 12.5,
             child: Icon(
               Icons.person_rounded,
-              size: 15,
+              size: 12.5,
             ),
-          )
+          ),
         ],
         otherAccountsPicturesSize: Size.fromRadius(15),
         accountName: Text(

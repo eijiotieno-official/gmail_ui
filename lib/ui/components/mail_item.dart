@@ -19,15 +19,11 @@ class MailItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: ListTile(
-          leading: InkWell(
-            borderRadius: BorderRadius.circular(50),
-            onTap: () {},
-            child: Icon(
-              Icons.star_outline_rounded,
-            ),
-          ),
-          title: Text.rich(
-            maxLines: 1,
+          leading: const CircleAvatar(),
+          isThreeLine: true,
+          title: Text(mail.sender),
+          subtitle: Text.rich(
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             TextSpan(
               children: [
