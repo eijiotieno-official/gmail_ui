@@ -5,27 +5,37 @@ class GmailSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: kTextTabBarHeight,
-      child: SearchAnchor(
-        builder: (BuildContext context, SearchController controller) {
-          return SearchBar(
-            controller: controller,
-            onTap: () => controller.openView(),
-            hintText: "Search Gmail",
-            trailing: [
-              IconButton(
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: SizedBox(
+        width: double.infinity,
+        child: SearchAnchor(
+          builder: (BuildContext context, SearchController controller) {
+            return SearchBar(
+              elevation: const MaterialStatePropertyAll(1),
+              controller: controller,
+              leading: IconButton(
                 onPressed: () => controller.openView(),
                 icon: const Icon(
                   Icons.search_rounded,
                 ),
               ),
-            ],
-          );
-        },
-        suggestionsBuilder: (context, controller) {
-          return [];
-        },
+              onTap: () => controller.openView(),
+              hintText: "Search Gmail",
+              trailing: [
+                // IconButton(
+                //   onPressed: () => controller.openView(),
+                //   icon: const Icon(
+                //     Icons.search_rounded,
+                //   ),
+                // ),
+              ],
+            );
+          },
+          suggestionsBuilder: (context, controller) {
+            return [];
+          },
+        ),
       ),
     );
   }

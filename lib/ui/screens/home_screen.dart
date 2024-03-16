@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:gmail_ui/data/databases/mail_database.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:gmail_ui/ui/components/gmail_drawer.dart';
 import 'package:gmail_ui/ui/components/gmail_rail.dart';
+import 'package:gmail_ui/ui/components/gmail_search_bar.dart';
+import 'package:gmail_ui/ui/components/mail_list.dart';
 
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    MailDatabase.getAll(20);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +41,22 @@ class HomeScreen extends StatelessWidget {
               drawer: screenTypeRef.screenType == ScreenType.mobile
                   ? const GmailDrawer()
                   : null,
-              appBar: AppBar(),
+              appBar: screenTypeRef.screenType == ScreenType.mobile
+                  ? AppBar()
+                  : null,
               body: Row(
                 children: [
                   if (screenTypeRef.screenType == ScreenType.tablet)
                     const GmailRail(),
+                  if (screenTypeRef.screenType == ScreenType.desktop)
+                    const GmailDrawer(),
                   Expanded(
-                    child: Container(),
+                    child: Column(
+                      children: [
+                        const GmailSearchBar(),
+                        MailList(mails: MailDatabase.data),
+                      ],
+                    ),
                   ),
                 ],
               ),

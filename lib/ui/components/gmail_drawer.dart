@@ -4,8 +4,6 @@ import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:provider/provider.dart';
 
-import 'gmail_navigation_icon.dart';
-
 class GmailDrawer extends StatelessWidget {
   const GmailDrawer({super.key});
 
@@ -20,106 +18,156 @@ class GmailDrawer extends StatelessWidget {
               selectedIndex: navigationRef.selectedIndex,
               onDestinationSelected: (index) =>
                   navigationRef.updateIndex(index),
-              children: const [
-                UserAccountsDrawerHeader(
-                  currentAccountPicture: CircleAvatar(
-                    child: Icon(
-                      Icons.person_rounded,
-                      size: 25,
-                    ),
-                  ),
-                  currentAccountPictureSize: Size.fromRadius(25),
-                  otherAccountsPictures: [
-                    CircleAvatar(
-                      child: Icon(
-                        Icons.person_rounded,
-                        size: 15,
-                      ),
-                    )
-                  ],
-                  otherAccountsPicturesSize: Size.fromRadius(15),
-                  accountName: Text(
-                    "User name",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  accountEmail: Text(
-                    "example@gmail.com",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                NavigationDrawerDestination(
-                  icon: GmailNavigationIcon(
-                    icon: Icon(Icons.inbox_outlined),
-                    unreadCount: 5,
-                  ),
-                  selectedIcon: GmailNavigationIcon(
-                    icon: Icon(Icons.inbox),
-                    unreadCount: 5,
-                  ),
-                  label: Text("Inbox"),
-                ),
-                NavigationDrawerDestination(
-                  icon: GmailNavigationIcon(
-                    icon: Icon(Icons.star_outline),
-                    unreadCount: 0,
-                  ),
-                  selectedIcon: GmailNavigationIcon(
-                    icon: Icon(Icons.star),
-                    unreadCount: 0,
-                  ),
-                  label: Text("Starred"),
-                ),
-                NavigationDrawerDestination(
-                  icon: GmailNavigationIcon(
-                    icon: Icon(Icons.snooze_outlined),
-                    unreadCount: 10,
-                  ),
-                  selectedIcon: GmailNavigationIcon(
-                    icon: Icon(Icons.snooze),
-                    unreadCount: 10,
-                  ),
-                  label: Text("Snoozed"),
-                ),
-                NavigationDrawerDestination(
-                  icon: GmailNavigationIcon(
-                    icon: Icon(Icons.send_outlined),
-                    unreadCount: 0,
-                  ),
-                  selectedIcon: GmailNavigationIcon(
-                    icon: Icon(Icons.send),
-                    unreadCount: 0,
-                  ),
-                  label: Text("Sent"),
-                ),
-                NavigationDrawerDestination(
-                  icon: GmailNavigationIcon(
-                    icon: Icon(Icons.drafts_outlined),
-                    unreadCount: 0,
-                  ),
-                  selectedIcon: GmailNavigationIcon(
-                    icon: Icon(Icons.drafts),
-                    unreadCount: 0,
-                  ),
-                  label: Text("Draft"),
-                ),
-                NavigationDrawerDestination(
-                  icon: GmailNavigationIcon(
-                    icon: Icon(Icons.keyboard_arrow_down_rounded),
-                    unreadCount: 0,
-                  ),
-                  selectedIcon: GmailNavigationIcon(
-                    icon: Icon(Icons.keyboard_arrow_down_rounded),
-                    unreadCount: 0,
-                  ),
-                  label: Text("More"),
-                ),
-              ],
+              tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
+              children: _buildNavigationRailDestinations(navigationRef),
             );
           },
         );
       },
     );
   }
+
+  List<Widget> _buildNavigationRailDestinations(
+    NavigationNotifier navigationRef,
+  ) {
+    final destinations = [
+      const UserAccountsDrawerHeader(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+        ),
+        currentAccountPicture: CircleAvatar(
+          child: Icon(
+            Icons.person_rounded,
+            size: 25,
+          ),
+        ),
+        currentAccountPictureSize: Size.fromRadius(25),
+        otherAccountsPictures: [
+          CircleAvatar(
+            child: Icon(
+              Icons.person_rounded,
+              size: 15,
+            ),
+          )
+        ],
+        otherAccountsPicturesSize: Size.fromRadius(15),
+        accountName: Text(
+          "User name",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        accountEmail: Text(
+          "example@gmail.com",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.inbox_outlined,
+        selectedIcon: Icons.inbox,
+        label: "Inbox",
+        unreadCount: 5,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.star_outline,
+        selectedIcon: Icons.star,
+        label: "Starred",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.snooze_outlined,
+        selectedIcon: Icons.snooze,
+        label: "Snoozed",
+        unreadCount: 10,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.send_outlined,
+        selectedIcon: Icons.send,
+        label: "Sent",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.drafts_outlined,
+        selectedIcon: Icons.drafts,
+        label: "Draft",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.label_important_outline_rounded,
+        selectedIcon: Icons.label_important_rounded,
+        label: "Important",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.chat_outlined,
+        selectedIcon: Icons.chat,
+        label: "Chats",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.schedule_send_outlined,
+        selectedIcon: Icons.schedule_send,
+        label: "Scheduled",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.mail_outline,
+        selectedIcon: Icons.mail,
+        label: "All Mail",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.info_outline,
+        selectedIcon: Icons.info,
+        label: "Spam",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.delete_outline,
+        selectedIcon: Icons.delete,
+        label: "Trash",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.label_outline,
+        selectedIcon: Icons.label,
+        label: "Categories",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.settings_outlined,
+        selectedIcon: Icons.settings,
+        label: "Manage labels",
+        unreadCount: 0,
+      ),
+      _navigationDrawerDestination(
+        icon: Icons.add_rounded,
+        selectedIcon: Icons.add_rounded,
+        label: "Create new label",
+        unreadCount: 0,
+      ),
+    ];
+
+    return destinations;
+  }
+
+  NavigationDrawerDestination _navigationDrawerDestination({
+    required IconData icon,
+    required IconData selectedIcon,
+    required String label,
+    required int unreadCount,
+  }) =>
+      NavigationDrawerDestination(
+        icon: Badge.count(
+          isLabelVisible: unreadCount > 0,
+          count: unreadCount,
+          child: Icon(icon),
+        ),
+        selectedIcon: Badge.count(
+          isLabelVisible: unreadCount > 0,
+          count: unreadCount,
+          child: Icon(selectedIcon),
+        ),
+        label: Text(label),
+      );
 }

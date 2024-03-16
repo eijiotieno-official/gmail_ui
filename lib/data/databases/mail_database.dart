@@ -15,10 +15,10 @@ class MailDatabase {
         id: i.toString(),
         sender: 'me@example.com',
         subject: generateSubject(1),
-        body: generateBody(3),
+        body: generateBody(7),
         recipients: generateRecipients(i),
         timestamp: DateTime.now().subtract(Duration(days: i)),
-        attachments: generateAttachments(2),
+        attachments: [],
       );
       data.add(mail);
     }

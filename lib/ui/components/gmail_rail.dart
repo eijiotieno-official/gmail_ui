@@ -8,23 +8,24 @@ class GmailRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<NavigationNotifier>(
-      builder: (context, ref, child) {
+      builder: (context, navigationRef, child) {
         return NavigationRail(
-          onDestinationSelected: (index) => ref.updateIndex(index),
+          onDestinationSelected: (index) => navigationRef.updateIndex(index),
           leading: FloatingActionButton(
             onPressed: () {},
             child: const Icon(Icons.create_rounded),
           ),
           labelType: NavigationRailLabelType.all,
-          destinations: _buildNavigationRailDestinations(ref),
-          selectedIndex: ref.selectedIndex,
+          destinations: _buildNavigationRailDestinations(navigationRef),
+          selectedIndex: navigationRef.selectedIndex,
+          minWidth: 80,
         );
       },
     );
   }
 
   List<NavigationRailDestination> _buildNavigationRailDestinations(
-    NavigationNotifier ref,
+    NavigationNotifier navigationRef,
   ) {
     final destinations = [
       _navigationRailDestination(
@@ -39,112 +40,84 @@ class GmailRail extends StatelessWidget {
         label: "Starred",
         unreadCount: 0,
       ),
-      _navigationRailDestinationWithBadge(
+      _navigationRailDestination(
         icon: Icons.snooze_outlined,
         selectedIcon: Icons.snooze,
         label: "Snoozed",
         unreadCount: 10,
       ),
-      _navigationRailDestinationWithBadge(
+      _navigationRailDestination(
         icon: Icons.send_outlined,
         selectedIcon: Icons.send,
         label: "Sent",
         unreadCount: 0,
       ),
-      _navigationRailDestinationWithBadge(
+      _navigationRailDestination(
         icon: Icons.drafts_outlined,
         selectedIcon: Icons.drafts,
         label: "Draft",
         unreadCount: 0,
       ),
       _navigationRailDestination(
-        icon: ref.moreVisible
-            ? Icons.keyboard_arrow_up_rounded
-            : Icons.keyboard_arrow_down_rounded,
-        label: ref.moreVisible ? "Less" : "More",
-        selectedIcon: ref.moreVisible
-            ? Icons.keyboard_arrow_up_rounded
-            : Icons.keyboard_arrow_down_rounded,
+        icon: Icons.label_important_outline_rounded,
+        selectedIcon: Icons.label_important_rounded,
+        label: "Important",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.chat_outlined,
+        selectedIcon: Icons.chat,
+        label: "Chats",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.schedule_send_outlined,
+        selectedIcon: Icons.schedule_send,
+        label: "Scheduled",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.mail_outline,
+        selectedIcon: Icons.mail,
+        label: "All Mail",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.info_outline,
+        selectedIcon: Icons.info,
+        label: "Spam",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.delete_outline,
+        selectedIcon: Icons.delete,
+        label: "Trash",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.label_outline,
+        selectedIcon: Icons.label,
+        label: "Categories",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.settings_outlined,
+        selectedIcon: Icons.settings,
+        label: "Manage labels",
+        unreadCount: 0,
+      ),
+      _navigationRailDestination(
+        icon: Icons.add_rounded,
+        selectedIcon: Icons.add_rounded,
+        label: "Create new label",
+        unreadCount: 0,
       ),
     ];
-
-    if (ref.moreVisible) {
-      destinations.addAll(
-        [
-          _navigationRailDestinationWithBadge(
-            icon: Icons.label_important_outline_rounded,
-            selectedIcon: Icons.label_important_rounded,
-            label: "Important",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.chat_outlined,
-            selectedIcon: Icons.chat,
-            label: "Chats",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.schedule_send_outlined,
-            selectedIcon: Icons.schedule_send,
-            label: "Scheduled",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.mail_outline,
-            selectedIcon: Icons.mail,
-            label: "All Mail",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.info_outline,
-            selectedIcon: Icons.info,
-            label: "Spam",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.delete_outline,
-            selectedIcon: Icons.delete,
-            label: "Trash",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.label_outline,
-            selectedIcon: Icons.label,
-            label: "Categories",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.settings_outlined,
-            selectedIcon: Icons.settings,
-            label: "Manage labels",
-            unreadCount: 0,
-          ),
-          _navigationRailDestinationWithBadge(
-            icon: Icons.add_rounded,
-            selectedIcon: Icons.add_rounded,
-            label: "Create new label",
-            unreadCount: 0,
-          ),
-        ],
-      );
-    }
 
     return destinations;
   }
 
   NavigationRailDestination _navigationRailDestination({
-    required IconData icon,
-    required IconData selectedIcon,
-    required String label,
-    int unreadCount = 0,
-  }) =>
-      NavigationRailDestination(
-        icon: Icon(icon),
-        selectedIcon: Icon(selectedIcon),
-        label: Text(label),
-      );
-
-  NavigationRailDestination _navigationRailDestinationWithBadge({
     required IconData icon,
     required IconData selectedIcon,
     required String label,
