@@ -9,16 +9,26 @@ class GmailRail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<NavigationNotifier>(
       builder: (context, navigationRef, child) {
-        return NavigationRail(
-          onDestinationSelected: (index) => navigationRef.updateIndex(index),
-          leading: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.create_rounded),
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: NavigationRail(
+                onDestinationSelected: (index) =>
+                    navigationRef.updateIndex(index),
+                leading: FloatingActionButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.create_rounded),
+                ),
+                labelType: NavigationRailLabelType.all,
+                destinations: _buildNavigationRailDestinations(navigationRef),
+                selectedIndex: navigationRef.selectedIndex,
+                minWidth: 80,
+              ),
+            ),
           ),
-          labelType: NavigationRailLabelType.all,
-          destinations: _buildNavigationRailDestinations(navigationRef),
-          selectedIndex: navigationRef.selectedIndex,
-          minWidth: 80,
         );
       },
     );
