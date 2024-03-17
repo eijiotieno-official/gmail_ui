@@ -14,43 +14,52 @@ class GmailSearchBar extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
             width: double.infinity,
-            child: SearchAnchor(
-              builder: (BuildContext context, SearchController controller) {
-                return SearchBar(
-                  elevation: const MaterialStatePropertyAll(1),
-                  controller: controller,
-                  leading: ref.screenType == ScreenType.mobile
-                      ? IconButton(
-                          onPressed: () => controller.openView(),
-                          icon: const Icon(
-                            Icons.menu_rounded,
-                          ),
-                        )
-                      : IconButton(
-                          onPressed: () => controller.openView(),
-                          icon: const Icon(
-                            Icons.search_rounded,
-                          ),
-                        ),
-                  onTap: () => controller.openView(),
-                  hintText: "Search Gmail",
-                  trailing: [
-                    if (ref.screenType == ScreenType.mobile)
-                      IconButton(
-                        onPressed: () => controller.openView(),
-                        icon: const Icon(Icons.search_rounded),
-                      ),
-                  if (ref.screenType != ScreenType.mobile)
-                   IconButton(
-                        onPressed: () => controller.openView(),
-                        icon: const Icon(Icons.filter_alt_rounded),
-                      ),
-                  ],
-                );
-              },
-              suggestionsBuilder: (context, controller) {
-                return [];
-              },
+            child: Row(
+              children: [
+                Expanded(
+                  child: SearchAnchor(
+                    builder: (BuildContext context, SearchController controller) {
+                      return SearchBar(
+                        elevation: const MaterialStatePropertyAll(1),
+                        controller: controller,
+                        leading: ref.screenType == ScreenType.mobile
+                            ? IconButton(
+                                onPressed: () => controller.openView(),
+                                icon: const Icon(
+                                  Icons.menu_rounded,
+                                ),
+                              )
+                            : IconButton(
+                                onPressed: () => controller.openView(),
+                                icon: const Icon(
+                                  Icons.search_rounded,
+                                ),
+                              ),
+                        onTap: () => controller.openView(),
+                        hintText: "Search Gmail",
+                        trailing: [
+                          if (ref.screenType == ScreenType.mobile)
+                            IconButton(
+                              onPressed: () => controller.openView(),
+                              icon: const Icon(Icons.search_rounded),
+                            ),
+                        if (ref.screenType != ScreenType.mobile)
+                         IconButton(
+                              onPressed: () => controller.openView(),
+                              icon: const Icon(Icons.filter_alt_rounded),
+                            ),
+                        ],
+                      );
+                    },
+                    suggestionsBuilder: (context, controller) {
+                      return [];
+                    },
+                  ),
+                ),
+                CircleAvatar(
+                  child: Icon(Icons.person_2_rounded),
+                ),
+              ],
             ),
           ),
         );

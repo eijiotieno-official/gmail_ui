@@ -91,7 +91,7 @@ class GmailRail extends StatelessWidget {
         icon: Icons.schedule_send_outlined,
         selectedIcon: Icons.schedule_send,
         label: "Scheduled",
-        unreadCount: 0,
+        unreadCount: 5,
       ),
       _navigationRailDestination(
         icon: Icons.mail_outline,
@@ -103,7 +103,7 @@ class GmailRail extends StatelessWidget {
         icon: Icons.info_outline,
         selectedIcon: Icons.info,
         label: "Spam",
-        unreadCount: 0,
+        unreadCount: 9,
       ),
       _navigationRailDestination(
         icon: Icons.delete_outline,
