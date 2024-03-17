@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gmail_ui/data/enums/screen_type.dart';
 import 'package:gmail_ui/state/navigation_notifier.dart';
+import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:provider/provider.dart';
 
 class GmailRail extends StatelessWidget {
@@ -9,26 +11,32 @@ class GmailRail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<NavigationNotifier>(
       builder: (context, navigationRef, child) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
-            ),
-            child: IntrinsicHeight(
-              child: NavigationRail(
-                onDestinationSelected: (index) =>
-                    navigationRef.updateIndex(index),
-                leading: FloatingActionButton(
-                  onPressed: () {},
-                  child: const Icon(Icons.create_rounded),
+        return Consumer<ScreenTypeNotifier>(
+          builder: (context, typeRef, child) {
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height,
                 ),
-                labelType: NavigationRailLabelType.all,
-                destinations: _buildNavigationRailDestinations(navigationRef),
-                selectedIndex: navigationRef.selectedIndex,
-                minWidth: 80,
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    onDestinationSelected: (index) =>
+                        navigationRef.updateIndex(index),
+                    leading: FloatingActionButton(
+                      onPressed: () {},
+                      child: const Icon(Icons.create_rounded),
+                    ),
+                    extended: typeRef.screenType == ScreenType.desktop,
+                    // labelType: NavigationRailLabelType.all,
+                    destinations:
+                        _buildNavigationRailDestinations(navigationRef),
+                    selectedIndex: navigationRef.selectedIndex,
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );

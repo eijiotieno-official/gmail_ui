@@ -43,10 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   : null,
               body: Row(
                 children: [
-                  if (screenTypeRef.screenType == ScreenType.tablet)
+                  if (screenTypeRef.screenType != ScreenType.mobile)
                     const GmailRail(),
-                  if (screenTypeRef.screenType == ScreenType.desktop)
-                    const GmailDrawer(),
+                  // if (screenTypeRef.screenType == ScreenType.desktop)
+                  //   const GmailDrawer(),
                   Expanded(
                     child: Column(
                       children: [
