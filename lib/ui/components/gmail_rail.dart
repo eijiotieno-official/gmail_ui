@@ -28,7 +28,6 @@ class GmailRail extends StatelessWidget {
                       child: const Icon(Icons.create_rounded),
                     ),
                     extended: typeRef.screenType == ScreenType.desktop,
-                    // labelType: NavigationRailLabelType.all,
                     destinations:
                         _buildNavigationRailDestinations(navigationRef),
                     selectedIndex: navigationRef.selectedIndex,
