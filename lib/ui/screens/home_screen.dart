@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/data/databases/mail_database.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
+import 'package:gmail_ui/state/drawer_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:gmail_ui/ui/components/gmail_drawer.dart';
 import 'package:gmail_ui/ui/components/gmail_rail.dart';
@@ -25,26 +26,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ScreenTypeNotifier>(
-      builder: (context, screenTypeRef, child) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            ScreenType type = constraints.maxWidth < 600
-                ? ScreenType.mobile
-                : constraints.maxWidth < 1200
-                    ? ScreenType.tablet
-                    : ScreenType.desktop;
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              screenTypeRef.update(type);
-            });
+    ScreenTypeNotifier screenTypeNotifier =
+        Provider.of<ScreenTypeNotifier>(context, listen: false);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        ScreenType type = constraints.maxWidth < 600
+            ? ScreenType.mobile
+            : constraints.maxWidth < 1200
+                ? ScreenType.tablet
+                : ScreenType.desktop;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          screenTypeNotifier.update(type);
+        });
+        return Consumer<DrawerNotifier>(
+          builder: (context, drawerRef, child) {
             return Scaffold(
-              drawer: screenTypeRef.screenType == ScreenType.mobile
-                  ? const GmailDrawer()
-                  : null,
+              key: drawerRef.globalKey,
+              drawer: type == ScreenType.mobile ? const GmailDrawer() : null,
               body: Row(
                 children: [
-                  if (screenTypeRef.screenType != ScreenType.mobile)
-                    const GmailRail(),
+                  if (type != ScreenType.mobile) const GmailRail(),
                   // if (screenTypeRef.screenType == ScreenType.desktop)
                   //   const GmailDrawer(),
                   Expanded(
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               floatingActionButton:
-                  screenTypeRef.screenType == ScreenType.mobile
+                  type == ScreenType.mobile
                       ? FloatingActionButton(
                           onPressed: () {},
                           child: const Icon(Icons.create_rounded),

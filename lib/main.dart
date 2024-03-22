@@ -1,5 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_ui/state/drawer_notifier.dart';
 import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:gmail_ui/ui/screens/home_screen.dart';
@@ -13,6 +14,9 @@ void main() {
         // Provide the SongsProvider with the loaded songs and SongHandler
         ChangeNotifierProvider(
           create: (context) => ScreenTypeNotifier(),
+        ),
+          ChangeNotifierProvider(
+          create: (context) => DrawerNotifier(),
         ),
         ChangeNotifierProvider(
           create: (context) => NavigationNotifier(),
