@@ -9,26 +9,21 @@ class GmailDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NavigationNotifier>(
-      builder: (context, navigationRef, child) {
-        return Consumer<ScreenTypeNotifier>(
-          builder: (context, ref, child) {
-            return NavigationDrawer(
-              elevation: ref.screenType == ScreenType.desktop ? 0 : null,
-              selectedIndex: navigationRef.selectedIndex,
-              onDestinationSelected: (index) =>
-                  navigationRef.updateIndex(index),
-              tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
-              children: _buildNavigationRailDestinations(navigationRef),
-            );
-          },
-        );
-      },
+    ScreenTypeNotifier screenTypeNotifier =
+        Provider.of<ScreenTypeNotifier>(context, listen: false);
+    NavigationNotifier navigationNotifier =
+        Provider.of<NavigationNotifier>(context, listen: false);
+    return NavigationDrawer(
+      elevation: screenTypeNotifier.screenType == ScreenType.desktop ? 0 : null,
+      selectedIndex: navigationNotifier.selectedIndex,
+      onDestinationSelected: (index) => navigationNotifier.updateIndex(index),
+      tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
+      children: _buildNavigationRailDestinations(navigationNotifier),
     );
   }
 
   List<Widget> _buildNavigationRailDestinations(
-    NavigationNotifier navigationRef,
+    NavigationNotifier navigationNotifier,
   ) {
     final destinations = [
       const UserAccountsDrawerHeader(
