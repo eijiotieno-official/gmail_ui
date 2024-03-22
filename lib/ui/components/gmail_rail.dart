@@ -9,40 +9,35 @@ class GmailRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NavigationNotifier>(
-      builder: (context, navigationRef, child) {
-        return Consumer<ScreenTypeNotifier>(
-          builder: (context, typeRef, child) {
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height,
-                ),
-                child: IntrinsicHeight(
-                  child: NavigationRail(
-                    onDestinationSelected: (index) =>
-                        navigationRef.updateIndex(index),
-                    leading: FloatingActionButton(
-                      onPressed: () {},
-                      child: const Icon(Icons.create_rounded),
-                    ),
-                    extended: typeRef.screenType == ScreenType.desktop,
-                    destinations:
-                        _buildNavigationRailDestinations(navigationRef),
-                    selectedIndex: navigationRef.selectedIndex,
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
+    ScreenTypeNotifier screenTypeNotifier =
+        Provider.of<ScreenTypeNotifier>(context, listen: false);
+    NavigationNotifier navigationNotifier =
+        Provider.of<NavigationNotifier>(context, listen: false);
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
+        ),
+        child: IntrinsicHeight(
+          child: NavigationRail(
+            onDestinationSelected: (index) =>
+                navigationNotifier.updateIndex(index),
+            leading: FloatingActionButton(
+              onPressed: () {},
+              child: const Icon(Icons.create_rounded),
+            ),
+            extended: screenTypeNotifier.screenType == ScreenType.desktop,
+            destinations: _buildNavigationRailDestinations(navigationNotifier),
+            selectedIndex: navigationNotifier.selectedIndex,
+          ),
+        ),
+      ),
     );
   }
 
   List<NavigationRailDestination> _buildNavigationRailDestinations(
-    NavigationNotifier navigationRef,
+    NavigationNotifier navigationNotifier,
   ) {
     final destinations = [
       _navigationRailDestination(
