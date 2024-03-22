@@ -18,7 +18,8 @@ class GmailSearchBar extends StatelessWidget {
               children: [
                 Expanded(
                   child: SearchAnchor(
-                    builder: (BuildContext context, SearchController controller) {
+                    builder:
+                        (BuildContext context, SearchController controller) {
                       return SearchBar(
                         elevation: const MaterialStatePropertyAll(1),
                         controller: controller,
@@ -43,8 +44,8 @@ class GmailSearchBar extends StatelessWidget {
                               onPressed: () => controller.openView(),
                               icon: const Icon(Icons.search_rounded),
                             ),
-                        if (ref.screenType != ScreenType.mobile)
-                         IconButton(
+                          if (ref.screenType != ScreenType.mobile)
+                            IconButton(
                               onPressed: () => controller.openView(),
                               icon: const Icon(Icons.filter_alt_rounded),
                             ),
@@ -56,8 +57,14 @@ class GmailSearchBar extends StatelessWidget {
                     },
                   ),
                 ),
-                CircleAvatar(
-                  child: Icon(Icons.person_2_rounded),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.person_2_rounded),
+                    ),
+                  ),
                 ),
               ],
             ),
