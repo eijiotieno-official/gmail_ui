@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gmail_ui/ui/components/compose_components/body_section.dart';
 import 'package:gmail_ui/ui/components/compose_components/from_section.dart';
+import 'package:gmail_ui/ui/components/compose_components/subject_section.dart';
 import 'package:gmail_ui/ui/components/compose_components/to_section.dart';
 
 class ComposeScreen extends StatefulWidget {
@@ -10,6 +12,60 @@ class ComposeScreen extends StatefulWidget {
 }
 
 class _ComposeScreenState extends State<ComposeScreen> {
+  TextEditingController _fromController = TextEditingController();
+
+  final TextEditingController _toController = TextEditingController();
+
+  final TextEditingController _ccController = TextEditingController();
+
+  final TextEditingController _bccController = TextEditingController();
+
+  final TextEditingController _subjectController = TextEditingController();
+
+  final TextEditingController _bodyController = TextEditingController();
+
+  final List<String> _senderMails = [
+    "eijiotieno.official.mail@gmail.com",
+    "david@gmail.com",
+    "eve@hotmail.com",
+    "nerdrotic@yahoo.com"
+  ];
+
+  @override
+  void initState() {
+    _fromController = TextEditingController(text: _senderMails[0]);
+    super.initState();
+  }
+
+  void _pickAccount() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Accounts"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(
+              _senderMails.length,
+              (index) {
+                return ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  selected: _senderMails[index] == _fromController.text.trim(),
+                  onTap: () {
+                    setState(() {
+                      _fromController =
+                          TextEditingController(text: _senderMails[index]);
+                    });
+                    Navigator.pop(context);
+                  },
+                  title: Text(_senderMails[index]),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,10 +121,23 @@ class _ComposeScreenState extends State<ComposeScreen> {
       ),
       body: Column(
         children: [
-          FromSection(),
-          Divider(),
-          ToSection(),
-          Divider(),
+          FromSection(
+            fromController: _fromController,
+            senderMails: _senderMails,
+            onPickAccount: () {
+              _pickAccount();
+            },
+          ),
+          const Divider(),
+          ToSection(
+            toController: _toController,
+            ccController: _ccController,
+            bccController: _bccController,
+          ),
+          const Divider(),
+          SubjectSection(controller: _subjectController),
+          const Divider(),
+          BodySection(controller: _bodyController),
         ],
       ),
     );

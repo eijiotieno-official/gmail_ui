@@ -1,62 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class FromSection extends StatefulWidget {
-  const FromSection({super.key});
-
-  @override
-  State<FromSection> createState() => _FromSectionState();
-}
-
-class _FromSectionState extends State<FromSection> {
-  TextEditingController _mailController = TextEditingController();
-
-  List<String> senderMails = [
-    "eijiotieno.official.mail@gmail.com",
-    "david@gmail.com",
-    "eve@hotmail.com",
-    "nerdrotic@yahoo.com"
-  ];
-
-  @override
-  void initState() {
-    _mailController = TextEditingController(text: senderMails[0]);
-    super.initState();
-  }
+class FromSection extends StatelessWidget {
+  final TextEditingController fromController;
+  final List<String> senderMails;
+  final VoidCallback onPickAccount;
+  const FromSection({
+    super.key,
+    required this.fromController,
+    required this.senderMails,
+    required this.onPickAccount,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Accounts"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: List.generate(
-                senderMails.length,
-                (index) {
-                  return ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    selected: senderMails[index] == _mailController.text.trim(),
-                    onTap: () {
-                      setState(() {
-                        _mailController =
-                            TextEditingController(text: senderMails[0]);
-                      });
-                      Navigator.pop(context);
-                    },
-                    title: Text(senderMails[index]),
-                  );
-                },
-              ),
-            ),
-          ),
-        );
-      },
+      onTap: onPickAccount,
       title: Row(
         children: [
           Text(
@@ -65,10 +23,11 @@ class _FromSectionState extends State<FromSection> {
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
-          const Expanded(
+          Expanded(
             child: TextField(
-              enabled: false,
-              decoration: InputDecoration(
+              controller: fromController,
+              onTap: onPickAccount,
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.zero,
               ),

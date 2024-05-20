@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ToSection extends StatefulWidget {
-  const ToSection({super.key});
+  final TextEditingController toController;
+
+  final TextEditingController ccController;
+
+  final TextEditingController bccController;
+
+  const ToSection(
+      {super.key,
+      required this.toController,
+      required this.ccController,
+      required this.bccController});
 
   @override
   State<ToSection> createState() => _ToSectionState();
 }
 
 class _ToSectionState extends State<ToSection> {
-  final TextEditingController _toController = TextEditingController();
-
-  final TextEditingController _ccController = TextEditingController();
-
-  final TextEditingController _bccController = TextEditingController();
-
   bool _isToggled = false;
 
   @override
@@ -23,7 +27,7 @@ class _ToSectionState extends State<ToSection> {
       children: [
         _buildTextInput(
           prefixText: "To",
-          textEditingController: _toController,
+          textEditingController: widget.toController,
           isTo: true && _isToggled == false,
         ),
         if (_isToggled) _buildToggleItems(),
@@ -37,13 +41,13 @@ class _ToSectionState extends State<ToSection> {
           const Divider(),
           _buildTextInput(
             prefixText: "Cc",
-            textEditingController: _ccController,
+            textEditingController: widget.ccController,
             isTo: false,
           ),
           const Divider(),
           _buildTextInput(
             prefixText: "Bcc",
-            textEditingController: _bccController,
+            textEditingController: widget.bccController,
             isTo: false,
           ),
         ],
