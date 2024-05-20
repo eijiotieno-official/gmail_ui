@@ -14,6 +14,8 @@ class ComposeScreen extends StatefulWidget {
 class _ComposeScreenState extends State<ComposeScreen> {
   TextEditingController _fromController = TextEditingController();
 
+  bool _isToToggled = false;
+
   final TextEditingController _toController = TextEditingController();
 
   final TextEditingController _ccController = TextEditingController();
@@ -84,6 +86,8 @@ class _ComposeScreenState extends State<ComposeScreen> {
             ),
           ),
           PopupMenuButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)),
             itemBuilder: (context) {
               return <PopupMenuEntry>[
                 PopupMenuItem(
@@ -119,26 +123,55 @@ class _ComposeScreenState extends State<ComposeScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          FromSection(
-            fromController: _fromController,
-            senderMails: _senderMails,
-            onPickAccount: () {
-              _pickAccount();
-            },
-          ),
-          const Divider(),
-          ToSection(
-            toController: _toController,
-            ccController: _ccController,
-            bccController: _bccController,
-          ),
-          const Divider(),
-          SubjectSection(controller: _subjectController),
-          const Divider(),
-          BodySection(controller: _bodyController),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            FromSection(
+              fromController: _fromController,
+              senderMails: _senderMails,
+              onPickAccount: () {
+                _pickAccount();
+              },
+            ),
+            const Divider(),
+            ToSection(
+              toController: _toController,
+              ccController: _ccController,
+              bccController: _bccController,
+              isToToggled: _isToToggled,
+              onToToggled: () {
+                setState(() {
+                  _isToToggled = true;
+                });
+              },
+              prefixColor: Theme.of(context).colorScheme.primary,
+            ),
+            const Divider(),
+            GestureDetector(
+              onPanStart: (d) {
+                if (_isToToggled && _ccController.text.trim().isEmpty ||
+                    _bccController.text.trim().isEmpty) {
+                  setState(() {
+                    _isToToggled = false;
+                  });
+                }
+              },
+              child: SubjectSection(controller: _subjectController),
+            ),
+            const Divider(),
+            GestureDetector(
+              onPanStart: (d) {
+                if (_isToToggled && _ccController.text.trim().isEmpty ||
+                    _bccController.text.trim().isEmpty) {
+                  setState(() {
+                    _isToToggled = false;
+                  });
+                }
+              },
+              child: BodySection(controller: _bodyController),
+            ),
+          ],
+        ),
       ),
     );
   }

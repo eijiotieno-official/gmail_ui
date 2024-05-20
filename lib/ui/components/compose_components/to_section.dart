@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
-class ToSection extends StatefulWidget {
+class ToSection extends StatelessWidget {
   final TextEditingController toController;
 
   final TextEditingController ccController;
 
   final TextEditingController bccController;
 
-  const ToSection(
-      {super.key,
-      required this.toController,
-      required this.ccController,
-      required this.bccController});
+  final bool isToToggled;
 
-  @override
-  State<ToSection> createState() => _ToSectionState();
-}
+  final VoidCallback onToToggled;
 
-class _ToSectionState extends State<ToSection> {
-  bool _isToggled = false;
+  final Color prefixColor;
+
+  const ToSection({
+    super.key,
+    required this.toController,
+    required this.ccController,
+    required this.bccController,
+    required this.isToToggled,
+    required this.onToToggled,
+    required this.prefixColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +30,10 @@ class _ToSectionState extends State<ToSection> {
       children: [
         _buildTextInput(
           prefixText: "To",
-          textEditingController: widget.toController,
-          isTo: true && _isToggled == false,
+          textEditingController: toController,
+          isTo: true && isToToggled == false,
         ),
-        if (_isToggled) _buildToggleItems(),
+        if (isToToggled) _buildToggleItems(),
       ],
     );
   }
@@ -41,13 +44,13 @@ class _ToSectionState extends State<ToSection> {
           const Divider(),
           _buildTextInput(
             prefixText: "Cc",
-            textEditingController: widget.ccController,
+            textEditingController: ccController,
             isTo: false,
           ),
           const Divider(),
           _buildTextInput(
             prefixText: "Bcc",
-            textEditingController: widget.bccController,
+            textEditingController: bccController,
             isTo: false,
           ),
         ],
@@ -59,24 +62,17 @@ class _ToSectionState extends State<ToSection> {
     required bool isTo,
   }) =>
       ListTile(
-        onTap: () {
-          if (isTo) {
-            setState(() {
-              _isToggled = true;
-            });
-          }
-        },
+        onTap: onToToggled,
         title: Row(
           children: [
             Text(
               "$prefixText    ",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              style: TextStyle(color: prefixColor),
             ),
             Expanded(
               child: TextField(
                 controller: textEditingController,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
