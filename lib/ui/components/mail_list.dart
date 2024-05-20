@@ -16,11 +16,17 @@ class MailList extends StatelessWidget {
         return Expanded(
           child: Card(
             elevation: ref.screenType == ScreenType.mobile ? 0.0 : 1.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
             child: ListView.builder(
               itemCount: mails.length,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return MailItem(mail: mails[index]);
+                return MailItem(
+                  mail: mails[index],
+                  isMobile: ref.screenType == ScreenType.mobile,
+                );
               },
             ),
           ),

@@ -8,4 +8,9 @@ class DrawerNotifier extends ChangeNotifier {
     _globalKey.currentState?.openDrawer();
     notifyListeners();
   }
+
+  void closeDrawer() {
+    _globalKey.currentState?.closeDrawer();
+    notifyListeners();
+  }
 }

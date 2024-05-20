@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 
 class GmailProfile extends StatelessWidget {
-  const GmailProfile({super.key});
+  final VoidCallback? onTap;
+  const GmailProfile({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CircleAvatar(
-        child: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.person_2_rounded),
-        ),
-      ),
+    return GestureDetector(
+      onTap: onTap,
+      child: const CircleAvatar(child: Icon(Icons.person_2_rounded)),
     );
   }
 }

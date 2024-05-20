@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
+import 'package:gmail_ui/state/drawer_notifier.dart';
 import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,12 @@ class GmailDrawer extends StatelessWidget {
     return NavigationDrawer(
       elevation: screenTypeNotifier.screenType == ScreenType.desktop ? 0 : null,
       selectedIndex: navigationNotifier.selectedIndex,
-      onDestinationSelected: (index) => navigationNotifier.updateIndex(index),
+      onDestinationSelected: (index) {
+        navigationNotifier.updateIndex(index);
+        if (screenTypeNotifier.screenType == ScreenType.mobile) {
+          context.read<DrawerNotifier>().closeDrawer();
+        }
+      },
       tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
       children: _buildNavigationRailDestinations(navigationNotifier),
     );
@@ -130,6 +136,7 @@ class GmailDrawer extends StatelessWidget {
         label: "Categories",
         unreadCount: 0,
       ),
+      const Divider(),
       _navigationDrawerDestination(
         icon: Icons.settings_outlined,
         selectedIcon: Icons.settings,

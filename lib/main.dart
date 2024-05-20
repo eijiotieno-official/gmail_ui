@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:gmail_ui/state/drawer_notifier.dart';
+import 'package:gmail_ui/state/mail_notifier.dart';
 import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:gmail_ui/ui/screens/home_screen.dart';
@@ -20,6 +21,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => NavigationNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MailNotifier()..loadMails(),
         ),
       ],
       // Use the MainApp widget as the root of the application

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gmail_ui/data/databases/mail_database.dart';
+import 'package:flutter/services.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
 import 'package:gmail_ui/state/drawer_notifier.dart';
+import 'package:gmail_ui/state/mail_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
 import 'package:gmail_ui/ui/components/gmail_drawer.dart';
 import 'package:gmail_ui/ui/components/gmail_rail.dart';
@@ -19,12 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    MailDatabase.getAll(20);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ScreenTypeNotifier screenTypeNotifier =
         Provider.of<ScreenTypeNotifier>(context, listen: false);
@@ -40,31 +35,47 @@ class _HomeScreenState extends State<HomeScreen> {
         });
         return Consumer<DrawerNotifier>(
           builder: (context, drawerRef, child) {
-            return Scaffold(
-              key: drawerRef.globalKey,
-              drawer: type == ScreenType.mobile ? const GmailDrawer() : null,
-              body: Row(
-                children: [
-                  if (type != ScreenType.mobile) const GmailRail(),
-                  // if (screenTypeRef.screenType == ScreenType.desktop)
-                  //   const GmailDrawer(),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const GmailSearchBar(),
-                        MailList(mails: MailDatabase.data),
-                      ],
-                    ),
-                  ),
-                ],
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                // Set the system navigation bar color based on the theme's surface color
+                systemNavigationBarColor: Theme.of(context).colorScheme.surface,
+                statusBarColor: Theme.of(context).colorScheme.surface,
+
+                // Adjust the navigation bar icon brightness based on the theme brightness
+                systemNavigationBarIconBrightness:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Brightness.light
+                        : Brightness.dark,
+
+                statusBarIconBrightness:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Brightness.light
+                        : Brightness.dark,
               ),
-              floatingActionButton:
-                  type == ScreenType.mobile
-                      ? FloatingActionButton(
-                          onPressed: () {},
-                          child: const Icon(Icons.create_rounded),
-                        )
-                      : null,
+              child: Scaffold(
+                appBar: const PreferredSize(
+                  preferredSize: Size.fromHeight(kToolbarHeight + 50),
+                  child: GmailSearchBar(),
+                ),
+                key: drawerRef.globalKey,
+                drawer: type == ScreenType.mobile ? const GmailDrawer() : null,
+                body: Row(
+                  children: [
+                    if (type != ScreenType.mobile) const GmailRail(),
+                    Expanded(
+                      child:
+                          MailList(mails: context.watch<MailNotifier>().mails),
+                    ),
+                  ],
+                ),
+                floatingActionButton: type == ScreenType.mobile
+                    ? FloatingActionButton.extended(
+                        onPressed: () {},
+                        icon: const Icon(Icons.create_rounded),
+                        label: const Text("Compose"),
+                      )
+                    : null,
+              ),
             );
           },
         );

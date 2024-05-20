@@ -1,4 +1,6 @@
-String generateSubject(int numberOfSubjects) {
+import 'dart:math';
+
+String generateSubject() {
   List<String> subjectPatterns = [
     'Important Meeting',
     'Project Update',
@@ -19,20 +21,11 @@ String generateSubject(int numberOfSubjects) {
     'Customer Feedback',
     'Security Update',
     'Holiday Celebration',
-    // Add more patterns as needed
   ];
 
-  List<String> generatedSubjects = [];
+  Random random = Random();
 
-  if (numberOfSubjects <= 0) {
-    throw ArgumentError("Number of subjects should be greater than 0");
-  }
+  int index = random.nextInt(subjectPatterns.length);
 
-  for (int i = 0; i < numberOfSubjects; i++) {
-    String pattern = subjectPatterns[i % subjectPatterns.length];
-    generatedSubjects.add('$pattern ${i + 1}');
-  }
-
-  return generatedSubjects.join(', ');
+  return subjectPatterns[index];
 }
-
