@@ -10,10 +10,7 @@ class GmailDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenTypeNotifier screenTypeNotifier =
-        Provider.of<ScreenTypeNotifier>(context, listen: false);
-
-    final screenType = screenTypeNotifier.screenType;
+    final screenType = context.watch<ScreenTypeNotifier>().screenType;
 
     return NavigationDrawer(
       elevation: screenType == ScreenType.desktop ? 0 : null,
