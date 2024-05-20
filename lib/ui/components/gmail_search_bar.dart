@@ -36,8 +36,10 @@ class GmailSearchBar extends StatelessWidget {
                       ),
                 onTap: () => controller.openView(),
                 hintText: "Search Gmail",
-                trailing: const [
-                  GmailProfile(),
+                trailing: [
+                  GmailProfile(
+                    onTap: () {},
+                  ),
                 ],
               );
             },

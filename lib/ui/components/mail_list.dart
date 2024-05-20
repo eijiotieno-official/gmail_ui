@@ -25,7 +25,9 @@ class MailList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return MailItem(
                   mail: mails[index],
-                  isMobile: ref.screenType == ScreenType.mobile,
+                  isMobile: ref.screenType == ScreenType.mobile &&
+                          mails.first == mails[index] ||
+                      mails.last == mails[index],
                 );
               },
             ),

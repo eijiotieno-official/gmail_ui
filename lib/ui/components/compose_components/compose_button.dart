@@ -13,7 +13,7 @@ class ComposeButton extends StatelessWidget {
 
     final screenType = screenTypeNotifier.screenType;
 
-    return screenType == ScreenType.mobile
+    return screenType == ScreenType.desktop || screenType == ScreenType.mobile
         ? FloatingActionButton.extended(
             onPressed: () => Navigator.push(
               context,

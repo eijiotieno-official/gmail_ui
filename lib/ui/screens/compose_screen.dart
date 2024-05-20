@@ -148,7 +148,7 @@ class _ComposeScreenState extends State<ComposeScreen> {
             ),
             const Divider(),
             GestureDetector(
-              onPanStart: (d) {
+              onTap: () {
                 if (_isToToggled && _ccController.text.trim().isEmpty ||
                     _bccController.text.trim().isEmpty) {
                   setState(() {
@@ -160,7 +160,7 @@ class _ComposeScreenState extends State<ComposeScreen> {
             ),
             const Divider(),
             GestureDetector(
-              onPanStart: (d) {
+              onTap: () {
                 if (_isToToggled && _ccController.text.trim().isEmpty ||
                     _bccController.text.trim().isEmpty) {
                   setState(() {

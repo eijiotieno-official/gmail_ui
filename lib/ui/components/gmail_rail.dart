@@ -10,10 +10,8 @@ class GmailRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenTypeNotifier screenTypeNotifier =
-        Provider.of<ScreenTypeNotifier>(context, listen: false);
-    NavigationNotifier navigationNotifier =
-        Provider.of<NavigationNotifier>(context, listen: false);
+    final screenType = context.watch<ScreenTypeNotifier>().screenType;
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: ConstrainedBox(
@@ -23,20 +21,18 @@ class GmailRail extends StatelessWidget {
         child: IntrinsicHeight(
           child: NavigationRail(
             onDestinationSelected: (index) =>
-                navigationNotifier.updateIndex(index),
+                context.read<NavigationNotifier>().updateIndex(index),
             leading: const ComposeButton(),
-            extended: screenTypeNotifier.screenType == ScreenType.desktop,
-            destinations: _buildNavigationRailDestinations(navigationNotifier),
-            selectedIndex: navigationNotifier.selectedIndex,
+            extended: screenType == ScreenType.desktop,
+            destinations: _buildNavigationRailDestinations(),
+            selectedIndex: context.watch<NavigationNotifier>().selectedIndex,
           ),
         ),
       ),
     );
   }
 
-  List<NavigationRailDestination> _buildNavigationRailDestinations(
-    NavigationNotifier navigationNotifier,
-  ) {
+  List<NavigationRailDestination> _buildNavigationRailDestinations() {
     final destinations = [
       _navigationRailDestination(
         icon: Icons.inbox_outlined,

@@ -22,7 +22,6 @@ class MailItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {},
-        borderRadius: BorderRadius.circular(16.0),
         child: ListTile(
           leading: const GmailProfile(),
           title: Row(
