@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gmail_ui/ui/components/compose_components/from_section.dart';
+import 'package:gmail_ui/ui/components/compose_components/to_section.dart';
 
 class ComposeScreen extends StatefulWidget {
   const ComposeScreen({super.key});
@@ -63,7 +65,10 @@ class _ComposeScreenState extends State<ComposeScreen> {
       ),
       body: Column(
         children: [
-          
+          FromSection(),
+          Divider(),
+          ToSection(),
+          Divider(),
         ],
       ),
     );

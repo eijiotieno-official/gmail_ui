@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gmail_ui/data/enums/screen_type.dart';
 import 'package:gmail_ui/state/navigation_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
+import 'package:gmail_ui/ui/components/compose_components/compose_button.dart';
 import 'package:provider/provider.dart';
 
 class GmailRail extends StatelessWidget {
@@ -23,10 +24,7 @@ class GmailRail extends StatelessWidget {
           child: NavigationRail(
             onDestinationSelected: (index) =>
                 navigationNotifier.updateIndex(index),
-            leading: FloatingActionButton(
-              onPressed: () {},
-              child: const Icon(Icons.create_rounded),
-            ),
+            leading: const ComposeButton(),
             extended: screenTypeNotifier.screenType == ScreenType.desktop,
             destinations: _buildNavigationRailDestinations(navigationNotifier),
             selectedIndex: navigationNotifier.selectedIndex,

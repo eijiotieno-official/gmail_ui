@@ -4,10 +4,12 @@ import 'package:gmail_ui/data/enums/screen_type.dart';
 import 'package:gmail_ui/state/drawer_notifier.dart';
 import 'package:gmail_ui/state/mail_notifier.dart';
 import 'package:gmail_ui/state/screen_type_notifier.dart';
+import 'package:gmail_ui/ui/components/compose_components/compose_button.dart';
 import 'package:gmail_ui/ui/components/gmail_drawer.dart';
 import 'package:gmail_ui/ui/components/gmail_rail.dart';
 import 'package:gmail_ui/ui/components/gmail_search_bar.dart';
 import 'package:gmail_ui/ui/components/mail_list.dart';
+import 'package:gmail_ui/ui/screens/compose_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -68,13 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                floatingActionButton: type == ScreenType.mobile
-                    ? FloatingActionButton.extended(
-                        onPressed: () {},
-                        icon: const Icon(Icons.create_rounded),
-                        label: const Text("Compose"),
-                      )
-                    : null,
+                floatingActionButton:
+                    type == ScreenType.mobile ? const ComposeButton() : null,
               ),
             );
           },
