@@ -9,7 +9,6 @@ import 'package:gmail_ui/ui/components/gmail_drawer.dart';
 import 'package:gmail_ui/ui/components/gmail_rail.dart';
 import 'package:gmail_ui/ui/components/gmail_search_bar.dart';
 import 'package:gmail_ui/ui/components/mail_list.dart';
-import 'package:gmail_ui/ui/screens/compose_screen.dart';
 
 import 'package:provider/provider.dart';
 
