@@ -58,4 +58,30 @@ class DateTimeService {
 
     return DateFormat(timeFormat).format(dateTime);
   }
+
+  static String timePassed({
+    required DateTime? dateTime,
+  }) {
+    if (dateTime == null) {
+      return "";
+    }
+
+    final Duration difference = now.difference(dateTime);
+
+    if (difference.inSeconds < 60) {
+      return '${difference.inSeconds} seconds ago';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays} days ago';
+    } else if (difference.inDays < 30) {
+      return '${(difference.inDays / 7).floor()} weeks ago';
+    } else if (difference.inDays < 365) {
+      return '${(difference.inDays / 30).floor()} months ago';
+    } else {
+      return '${(difference.inDays / 365).floor()} years ago';
+    }
+  }
 }

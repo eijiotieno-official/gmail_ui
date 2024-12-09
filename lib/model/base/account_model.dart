@@ -1,4 +1,4 @@
-class Account {
+abstract class Account {
   final String name;
   final String email;
   final String? profilePicture;
@@ -7,7 +7,4 @@ class Account {
     required this.email,
     this.profilePicture,
   });
-
-  static Account currentUser() =>
-      Account(name: "Eiji", email: "email@gmail.com");
 }

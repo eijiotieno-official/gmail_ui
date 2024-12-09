@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gmail_ui/model/base/mail_model.dart';
-import 'package:gmail_ui/model/services/date_time_services.dart';
-import 'package:gmail_ui/view/widgets/account_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../model/base/mail_model.dart';
+import '../../model/services/date_time_services.dart';
+import '../pages/mail_detail_page.dart';
+import 'account_view.dart';
+import '../../view_model/mail_view_model.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-class MailItem extends StatelessWidget {
+class MailItem extends ConsumerWidget {
   final Mail mail;
   final bool isLast;
   final bool isFirst;
@@ -16,8 +19,12 @@ class MailItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     DeviceScreenType screenType = getDeviceType(MediaQuery.of(context).size);
+
+    final openedMail = ref.watch(openedMailProvider);
+
+    bool isOpened = openedMail == mail;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -30,7 +37,24 @@ class MailItem extends StatelessWidget {
               ),
       ),
       child: ListTile(
-        onTap: () {},
+        tileColor:
+            isOpened ? Theme.of(context).colorScheme.primaryContainer : null,
+
+        onTap: () {
+          ref.read(openedMailProvider.notifier).state = mail;
+
+          if (screenType == DeviceScreenType.mobile ||
+              screenType == DeviceScreenType.tablet) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return MailDetailPage();
+                },
+              ),
+            );
+          }
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: isLast ? Radius.circular(16.0) : Radius.zero,

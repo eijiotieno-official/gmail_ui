@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gmail_ui/view/widgets/async_view_builder.dart';
-import 'package:gmail_ui/view/widgets/mail_list.dart';
-import 'package:gmail_ui/view_model/mail_view_model.dart';
+import 'mail_detail_page.dart';
+import '../widgets/async_view_builder.dart';
+import '../widgets/mail_list.dart';
+import '../../view_model/mail_view_model.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../view_model/drawer_view_model.dart';
@@ -52,11 +53,21 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: Row(
                     children: [
                       CustomRail(),
-                      MailList(mails: mails),
+                      Expanded(
+                        flex: 2,
+                        child: MailList(mails: mails),
+                      ),
+                      if (ref.watch(openedMailProvider) != null &&
+                          screenType == DeviceScreenType.desktop)
+                        Expanded(
+                          flex: 2,
+                          child: MailDetailPage(),
+                        ),
                     ],
                   ),
                 ),
-                floatingActionButton: screenType == DeviceScreenType.mobile
+                floatingActionButton: screenType == DeviceScreenType.mobile &&
+                        ref.watch(openedMailProvider) == null
                     ? ComposeButton()
                     : null,
               );

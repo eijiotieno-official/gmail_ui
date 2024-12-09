@@ -11,16 +11,12 @@ final AccountRepository _accountRepository = AccountRepository();
 
 class MailRepository {
   List<Mail> fetch() {
-    final accounts = _accountRepository.fetch;
-    final currentUser = Account.currentUser();
+    final accounts = _accountRepository.accounts;
+    final currentUser = _accountRepository.currentUser;
 
     return List.generate(accounts.length, (index) {
       final account = accounts[index];
       final isEven = index.isEven;
-
-      // Determine sender and recipient
-      final from = isEven ? account : currentUser;
-      final to = isEven ? currentUser : account;
 
       // Generate CC list
       final cc = _generateCc(accounts, isEven);
@@ -34,13 +30,13 @@ class MailRepository {
 
       // Create Mail object
       return Mail(
-        from: from,
-        to: to,
+        from: account,
+        to: currentUser,
         cc: cc,
         subject: subject,
         body: body,
         time: time,
-        isRead: isEven,
+        isRead: index % 4 == 0,
         isStarred: !isEven,
       );
     });

@@ -24,3 +24,7 @@ final mailProvider =
   MailRepository repository = MailRepository();
   return MailViewModel(repository);
 });
+
+final openedMailProvider = StateProvider<Mail?>((ref) {
+  return null;
+});

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gmail_ui/model/base/account_model.dart';
-import 'package:gmail_ui/view/widgets/account_view.dart';
-import 'package:gmail_ui/view_model/drawer_view_model.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
+import '../../view_model/account_view_model.dart';
+import '../../view_model/drawer_view_model.dart';
+import 'account_view.dart';
 
 class CustomSearchBar extends ConsumerWidget {
   const CustomSearchBar({super.key});
@@ -18,6 +19,8 @@ class CustomSearchBar extends ConsumerWidget {
       tablet: 16,
       desktop: 16,
     );
+
+    final currentUser = ref.watch(currentUserAccountProvider);
 
     return Padding(
       padding: EdgeInsets.all(padding),
@@ -47,7 +50,48 @@ class CustomSearchBar extends ConsumerWidget {
               onTap: () => controller.openView(),
               hintText: "Search Gmail",
               trailing: [
-                AccountProfileView(account: Account.currentUser()),
+                AccountProfileView(
+                  account: currentUser,
+                  onTap: () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Center(
+                            child: Text(
+                              "Gmail",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  child: Icon(Icons.person_2_rounded),
+                                ),
+                                title: Text(currentUser.name),
+                                subtitle: Text(currentUser.email),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Close"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             );
           },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gmail_ui/model/base/account_model.dart';
+
+import '../../model/base/account_model.dart';
 
 class AccountProfileView extends StatelessWidget {
   final Account account;

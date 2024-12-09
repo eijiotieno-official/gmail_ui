@@ -11,7 +11,9 @@ class AccountRepository {
 
   final _companies = _CompanyGenerator.data();
 
-  List<Account> get fetch => [..._users, ..._companies];
+  List<Account> get accounts => [..._users, ..._companies];
+
+  User currentUser = User(name: "Eiji", email: "eiji@gmail.com");
 }
 
 class _CompanyGenerator {

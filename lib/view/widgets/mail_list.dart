@@ -20,42 +20,40 @@ class MailList extends StatelessWidget {
       desktop: 16,
     );
 
-    return Expanded(
-      child: Column(
-        children: [
-          CustomSearchBar(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: padding,
-                right: padding,
-                left: padding,
+    return Column(
+      children: [
+        CustomSearchBar(),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: padding,
+              right: padding,
+              left: padding,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                border: Border.all(
+                  color: screenType == DeviceScreenType.mobile
+                      ? Colors.transparent
+                      : Theme.of(context).hoverColor,
+                ),
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  border: Border.all(
-                    color: screenType == DeviceScreenType.mobile
-                        ? Colors.transparent
-                        : Theme.of(context).hoverColor,
-                  ),
-                ),
-                child: ListView.builder(
-                  itemCount: mails.length,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return MailItem(
-                      mail: mails[index],
-                      isFirst: index == 0,
-                      isLast: index == (mails.length - 1),
-                    );
-                  },
-                ),
+              child: ListView.builder(
+                itemCount: mails.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return MailItem(
+                    mail: mails[index],
+                    isFirst: index == 0,
+                    isLast: index == (mails.length - 1),
+                  );
+                },
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
