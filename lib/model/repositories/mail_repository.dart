@@ -23,7 +23,7 @@ class MailRepository {
 
       // Generate email content
       final subject = lorem(paragraphs: 1, words: 20);
-      final body = lorem(paragraphs: 2, words: 100);
+      final body = lorem(paragraphs: 4, words: 100);
 
       // Generate timestamp
       final time = _generateTime();

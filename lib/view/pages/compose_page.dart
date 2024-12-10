@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gmail_ui/view/widgets/compose_app_bar_view.dart';
-import 'package:gmail_ui/view/widgets/compose_buttons_options_view.dart';
-import '../../view_model/account_view_model.dart';
 
+import '../../view_model/account_view_model.dart';
 import '../widgets/body_section.dart';
+import '../widgets/compose_app_bar_view.dart';
+import '../widgets/compose_buttons_options_view.dart';
 import '../widgets/custom_divider.dart';
 import '../widgets/input_view.dart';
 import '../widgets/subject_section.dart';

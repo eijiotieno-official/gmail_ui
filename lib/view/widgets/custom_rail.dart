@@ -6,56 +6,84 @@ import '../../view_model/drawer_view_model.dart';
 import '../../view_model/selected_index.dart';
 import 'compose_button.dart';
 
+/// Custom navigation rail that adapts to different screen sizes.
 class CustomRail extends ConsumerWidget {
   const CustomRail({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int selectedIndex = ref.watch(selectedIndexProvider);
+    final selectedIndex = ref.watch(selectedIndexProvider);
+    
+    final screenType = getDeviceType(MediaQuery.of(context).size);
 
-    DeviceScreenType screenType = getDeviceType(MediaQuery.of(context).size);
+    // Determine if the drawer should be shown or hidden based on screen size.
+    final hideDrawer = screenType == DeviceScreenType.mobile;
 
-    return screenType == DeviceScreenType.mobile
-        ? const SizedBox.shrink()
+    return hideDrawer
+        ? const SizedBox
+            .shrink() // No rail on mobile, just return an empty widget.
         : Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(getValueForScreenType<double>(
-                    context: context,
-                    mobile: 8,
-                    tablet: 16,
-                    desktop: 16,
-                  )),
-                  child: ComposeButton(),
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: IntrinsicHeight(
-                    child: NavigationRail(
-                      onDestinationSelected: (index) {
-                        ref.read(selectedIndexProvider.notifier).state = index;
-                        if (screenType == DeviceScreenType.mobile) {
-                          ref.read(drawerProvider.notifier).closeDrawer();
-                        }
-                      },
-                      extended: screenType == DeviceScreenType.desktop,
-                      destinations: _buildNavigationRailDestinations(context),
-                      selectedIndex: selectedIndex,
-                    ),
-                  ),
-                ),
+              _buildComposeButton(context),
+              _buildNavigationRail(
+                context,
+                selectedIndex,
+                screenType,
+                ref,
               ),
             ],
           );
   }
 
+  /// Builds the compose button at the top of the rail.
+  Widget _buildComposeButton(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: EdgeInsets.all(
+          getValueForScreenType<double>(
+            context: context,
+            mobile: 8,
+            tablet: 16,
+            desktop: 16,
+          ),
+        ),
+        child: const ComposeButton(),
+      ),
+    );
+  }
+
+  /// Builds the navigation rail with mail categories and other destinations.
+  Widget _buildNavigationRail(
+    BuildContext context,
+    int selectedIndex,
+    DeviceScreenType screenType,
+    WidgetRef ref,
+  ) {
+    return Expanded(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: IntrinsicHeight(
+          child: NavigationRail(
+            onDestinationSelected: (index) {
+              ref.read(selectedIndexProvider.notifier).state = index;
+              if (screenType == DeviceScreenType.mobile) {
+                ref.read(drawerProvider.notifier).closeDrawer();
+              }
+            },
+            extended: screenType == DeviceScreenType.desktop,
+            destinations: _buildNavigationRailDestinations(context),
+            selectedIndex: selectedIndex,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the destinations for the navigation rail (e.g., Inbox, Starred, etc.).
   List<NavigationRailDestination> _buildNavigationRailDestinations(
       BuildContext context) {
     final destinations = [
@@ -162,6 +190,7 @@ class CustomRail extends ConsumerWidget {
     return destinations;
   }
 
+  /// Builds a single navigation rail destination with a badge for unread count.
   NavigationRailDestination _navigationRailDestination({
     required IconData icon,
     required IconData selectedIcon,
