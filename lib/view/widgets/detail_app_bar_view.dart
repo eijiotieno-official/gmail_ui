@@ -18,6 +18,9 @@ class DetailAppBar extends ConsumerWidget {
         top: screenType == DeviceScreenType.desktop ? 16.0 : 0.0,
       ),
       child: AppBar(
+        shadowColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         leading: _buildBackButton(context, ref, screenType),
         actions: [_buildActionButtons()],
       ),

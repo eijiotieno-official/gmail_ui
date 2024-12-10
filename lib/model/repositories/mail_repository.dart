@@ -22,8 +22,8 @@ class MailRepository {
       final cc = _generateCc(accounts, isEven);
 
       // Generate email content
-      final subject = lorem(paragraphs: 1, words: 20);
-      final body = lorem(paragraphs: 4, words: 100);
+      final subject = lorem(paragraphs: 1, words: 50);
+      final body = lorem(paragraphs: 5, words: 125);
 
       // Generate timestamp
       final time = _generateTime();
