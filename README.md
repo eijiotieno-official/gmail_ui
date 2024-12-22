@@ -8,6 +8,10 @@ A clean and responsive Gmail-inspired UI built with Flutter.
 - Fully responsive for different screen sizes.
 - Built entirely using Flutter widgets.
 
+## 🎥 Video
+
+Check out a detailed walkthrough of the UI on [YouTube](https://youtu.be/tIuoigKtgqk).
+
 ## Screenshots
 
 <img src="screenshots/Screenshot from 2024-12-12 15-24-23.png" alt="mobile" width="300">  
@@ -17,4 +21,3 @@ A clean and responsive Gmail-inspired UI built with Flutter.
 <img src="screenshots/Screenshot from 2024-12-12 15-27-44.png" alt="desktop">  
 
 <img src="screenshots/Screenshot from 2024-12-12 15-30-52.png" alt="desktop2">  
-

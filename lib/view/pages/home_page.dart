@@ -30,8 +30,10 @@ class _HomePageState extends ConsumerState<HomePage> {
 
         // Determine which UI components to show based on device type.
         final showDrawer = deviceType == DeviceScreenType.mobile;
+
         final showMailDetailPage = deviceType == DeviceScreenType.desktop &&
             ref.watch(openedMailProvider) != null;
+            
         final showComposeButton = deviceType == DeviceScreenType.mobile &&
             ref.watch(openedMailProvider) == null;
 
